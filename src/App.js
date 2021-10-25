@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import Home from './components/page/Home';
 import PrivateRoute from './routes/PrivateRoute';
+import ProductDetail from './components/page/ProductDetail';
 import PublicRoute from './routes/PublicRoute';
 import Register from './components/page/Register';
 import Signin from './components/page/Signin';
@@ -13,6 +14,11 @@ export const privateRoutes = [
     path: '/',
     name: 'homepage',
     component: Home,
+  },
+  {
+    path: `/productDetail/:id`,
+    name: 'productDetail',
+    component: ProductDetail,
   },
 ];
 export const publicRoute = [
@@ -43,6 +49,8 @@ const App = () => {
           {privateRoutes.map((route) => (
             <PrivateRoute
               key={route.name}
+              exact
+              sitr
               path={route.path}
               component={route.component}
             />
