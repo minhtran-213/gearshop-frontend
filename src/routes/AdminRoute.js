@@ -1,6 +1,5 @@
 import { Redirect, Route } from 'react-router';
 
-import AdminHome from '../components/page/AdminHome';
 import React from 'react';
 import { Routes } from '../constants/routes';
 import { connect } from 'react-redux';

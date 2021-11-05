@@ -4,12 +4,37 @@ import { LoginAuthAction } from '../../redux/actions/AuthAction';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 
-const Signin = ({ login }) => {
+const Signin = ({ login, auth }) => {
   const [userRequest, setUserRequest] = useState({});
   const history = useHistory();
+  const { errorCode, message } = auth;
   return (
     <>
       <section className='vh-100' style={{ backgroundColor: '#508bfc' }}>
+        {message ? (
+          <div
+            class='alert alert-success alert-dismissible fade show'
+            role='alert'>
+            {message}
+            <button
+              type='button'
+              class='btn-close'
+              data-bs-dismiss='alert'
+              aria-label='Close'></button>
+          </div>
+        ) : errorCode ? (
+          <div
+            class='alert alert-danger alert-dismissible fade show'
+            role='alert'>
+            {errorCode}
+            <button
+              onClick={() => window.location.reload(false)}
+              type='button'
+              class='btn-close'
+              data-bs-dismiss='alert'
+              aria-label='Close'></button>
+          </div>
+        ) : undefined}
         <div className='container py-5 h-100'>
           <div className='row d-flex justify-content-center align-items-center h-100'>
             <div className='col-12 col-md-8 col-lg-6 col-xl-5'>

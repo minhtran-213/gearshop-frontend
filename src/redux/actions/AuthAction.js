@@ -4,15 +4,30 @@ import axios from 'axios';
 const RegisterAuthAction = (userState, history) => {
   return async (dispatch) => {
     try {
-      //   console.log(userState);
       const response = await axios.post('/auth/signup', userState);
       const { data } = response;
-      // console.log(response);
-      dispatch({ type: AuthActionType.REGISTER_SUCCESS, payload: data });
-      history.push('/');
+      console.log(data);
+      if (data.errorCode) {
+        console.log('errorCode in action:', data.errorCode);
+        dispatch({
+          type: AuthActionType.REGISTER_FAIL,
+          payload: data.errorCode,
+        });
+      } else {
+        console.log('successCode in action: ', data.message);
+        history.push('/signin');
+        dispatch({
+          type: AuthActionType.REGISTER_SUCCESS,
+          payload: data.message,
+        });
+      }
     } catch (error) {
-      console.log(error);
-      dispatch({ type: AuthActionType.REGISTER_FAIL, payload: error });
+      if (error.response) {
+        console.log(error.response.data);
+        console.log(error.response.data.errorCode);
+      }
+      const { errorCode } = error.response.data;
+      dispatch({ type: AuthActionType.REGISTER_FAIL, payload: errorCode });
     }
   };
 };
@@ -20,25 +35,24 @@ const RegisterAuthAction = (userState, history) => {
 const LoginAuthAction = (userState, history) => {
   return async (dispatch) => {
     try {
-      //   console.log(userState);
       const response = await axios.post('/auth/login', userState);
       const data = {
         user: response.data.userJwt,
         token: response.data.token,
         roles: response.data.roles,
       };
-      // console.log(data);
       dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });
 
       if (data.roles.includes('ROLE_ADMIN')) {
-        console.log(true);
         history.push('/admin');
       } else {
-        console.log(false);
         history.push('/');
       }
     } catch (error) {
-      dispatch({ type: AuthActionType.LOGIN_FAIL, payload: {} });
+      dispatch({
+        type: AuthActionType.LOGIN_FAIL,
+        payload: 'Login failed. Check email and password again',
+      });
     }
   };
 };

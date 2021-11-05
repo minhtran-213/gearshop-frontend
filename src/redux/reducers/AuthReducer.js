@@ -7,6 +7,7 @@ const authState = {
   user: {},
   token: '',
   roles: [],
+  errorCode: '',
 };
 const getAuthState = () => {
   try {
@@ -45,9 +46,9 @@ const authReducer = (state = newAuth, action) => {
       localStorage.setItem('user', JSON.stringify(newState));
       return newState;
     case AuthActionType.LOGIN_FAIL:
-      return state;
+      return { ...state, ...{ errorCode: action.payload } };
     case AuthActionType.REGISTER_FAIL:
-      return state;
+      return { ...state, ...{ errorCode: action.payload } };
     case AuthActionType.LOGOUT:
       localStorage.removeItem('user');
       return authState;

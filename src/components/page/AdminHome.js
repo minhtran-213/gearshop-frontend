@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import React from 'react';
 import TableManufacturer from '../component/TableManufacturer';
-import TableProduct from '../component/TableProduct';
 import TableUser from '../component/TableUser';
 import { getAllManufacturerAdmin } from '../../redux/actions/ManufacturerAction';
 import { getAllUsers } from '../../redux/actions/UserAction';
@@ -34,7 +33,7 @@ const AdminHome = () => {
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link onClick={callManufacturer} eventKey='second'>
-                  Tab 2
+                  Manufacturer
                 </Nav.Link>
               </Nav.Item>
             </Nav>
