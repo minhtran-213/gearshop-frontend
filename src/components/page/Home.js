@@ -1,8 +1,6 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 
-import Footer from '../layout/Footer';
-import Header from '../layout/Header';
 import Paging from '../component/Paging';
 import ProductCard from '../component/ProductCard';
 import { getProducts as listProducts } from '../../redux/actions/ProductsAction';
@@ -25,7 +23,6 @@ const Home = () => {
   };
   return (
     <>
-      <Header />
       <Container className='mx-0 my-3'>
         <Row>
           <Col>
@@ -61,8 +58,6 @@ const Home = () => {
           </Col>
         </Row>
       </Container>
-
-      <Footer />
     </>
   );
 };

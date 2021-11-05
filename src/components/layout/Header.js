@@ -42,15 +42,19 @@ const Header = ({ auth, logout }) => {
               Link
             </Nav.Link>
           </Nav>
-          <Form className='d-flex me-5'>
-            <FormControl
-              type='search'
-              placeholder='Search'
-              className='me-2'
-              aria-label='Search'
-            />
-            <Button variant='outline-success'>Search</Button>
-          </Form>
+          {auth.roles.includes('ROLE_USER') ? (
+            <Form className='d-flex me-5'>
+              <FormControl
+                type='search'
+                placeholder='Search'
+                className='me-2'
+                aria-label='Search'
+              />
+              <Button variant='outline-success'>Search</Button>
+            </Form>
+          ) : (
+            <></>
+          )}
         </Navbar.Collapse>
         {!auth.isLoggedIn ? (
           <>
@@ -72,12 +76,22 @@ const Header = ({ auth, logout }) => {
             <Button
               className='btn btn-warning me-3'
               onClick={(event) => {
-                event.preventDefault();
+                // event.preventDefault();
+                // console.log(history);
+                // history.push('/signin');
                 logout(history);
               }}>
               Logout
             </Button>
-            <h5 style={{ color: 'white' }}>{user.fullName}</h5>
+            {/* <Link
+              to='/signin'
+              onClick={(event) => {
+                event.preventDefault();
+                logout(history);
+              }}>
+              Logout
+            </Link> */}
+            <h5 style={{ color: 'white' }}>{user.first_name}</h5>
           </>
         )}
       </Container>

@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-import Footer from '../layout/Footer';
-import Header from '../layout/Header';
 import { LoginAuthAction } from '../../redux/actions/AuthAction';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -11,7 +9,6 @@ const Signin = ({ login }) => {
   const history = useHistory();
   return (
     <>
-      <Header />
       <section className='vh-100' style={{ backgroundColor: '#508bfc' }}>
         <div className='container py-5 h-100'>
           <div className='row d-flex justify-content-center align-items-center h-100'>
@@ -68,7 +65,6 @@ const Signin = ({ login }) => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

@@ -1,5 +1,3 @@
-import Footer from '../layout/Footer';
-import Header from '../layout/Header';
 import React from 'react';
 import { RegisterAuthAction } from '../../redux/actions/AuthAction';
 import { connect } from 'react-redux';
@@ -12,7 +10,6 @@ const Register = ({ user, register }) => {
 
   return (
     <>
-      <Header />
       <section className='vh-100' style={{ backgroundColor: '#508bfc' }}>
         <div className='container py-5 h-100'>
           <div className='row d-flex justify-content-center align-items-center h-100'>
@@ -105,7 +102,6 @@ const Register = ({ user, register }) => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

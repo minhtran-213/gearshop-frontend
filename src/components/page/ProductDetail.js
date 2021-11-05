@@ -1,8 +1,6 @@
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import React, { useEffect } from 'react';
 
-import Footer from '../layout/Footer';
-import Header from '../layout/Header';
 import { getProductDetail as listProductDetail } from '../../redux/actions/ProductsAction';
 import style from './ProductDetail.module.css';
 import { useDispatch } from 'react-redux';
@@ -21,7 +19,6 @@ const ProductDetail = () => {
   }, [dispatch, id]);
   return (
     <>
-      <Header />
       {loading ? (
         <h3>Loading...</h3>
       ) : error ? (
@@ -82,8 +79,6 @@ const ProductDetail = () => {
         //   </div>
         // </div>
       )}
-
-      <Footer />
     </>
   );
 };

@@ -21,15 +21,22 @@ const LoginAuthAction = (userState, history) => {
   return async (dispatch) => {
     try {
       //   console.log(userState);
-      const response = await axios.post('/auth/signin', userState);
+      const response = await axios.post('/auth/login', userState);
       const data = {
-        user: response.data.user,
+        user: response.data.userJwt,
         token: response.data.token,
         roles: response.data.roles,
       };
       // console.log(data);
       dispatch({ type: AuthActionType.LOGIN_SUCCESS, payload: data });
-      history.push('/homepage');
+
+      if (data.roles.includes('ROLE_ADMIN')) {
+        console.log(true);
+        history.push('/admin');
+      } else {
+        console.log(false);
+        history.push('/');
+      }
     } catch (error) {
       dispatch({ type: AuthActionType.LOGIN_FAIL, payload: {} });
     }
@@ -38,8 +45,9 @@ const LoginAuthAction = (userState, history) => {
 
 const LogoutAuthAction = (history) => {
   return (dispatch) => {
+    history.push('/signin');
     dispatch({ type: AuthActionType.LOGOUT });
-    history.push('/');
+    // console.log(history);
   };
 };
 
