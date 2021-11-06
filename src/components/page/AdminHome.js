@@ -1,7 +1,7 @@
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import React from 'react';
 import TableManufacturer from '../component/TableManufacturer';
 import TableUser from '../component/TableUser';
 import { getAllManufacturerAdmin } from '../../redux/actions/ManufacturerAction';
@@ -12,15 +12,19 @@ const AdminHome = () => {
   const dispatch = useDispatch();
   const getUsers = useSelector((state) => state.user);
   const getManufacturers = useSelector((state) => state.manufacturer);
-  const { loading, users } = getUsers;
+  const { loading, users, totalPages, currentPage } = getUsers;
   const { manufacturerLoading, manufacturers } = getManufacturers;
+  const [page, setPage] = useState(0);
   // console.log(users);
   useEffect(() => {
-    dispatch(getAllUsers());
-  }, [dispatch]);
+    dispatch(getAllUsers(page));
+  }, [dispatch, page]);
 
   const callManufacturer = () => {
     dispatch(getAllManufacturerAdmin());
+  };
+  const changePage = (pageChanged) => {
+    setPage(pageChanged);
   };
   return (
     <div className='m-2'>
@@ -41,7 +45,13 @@ const AdminHome = () => {
           <Col sm={9}>
             <Tab.Content>
               <Tab.Pane eventKey='first'>
-                <TableUser users={users} loading={loading} />
+                <TableUser
+                  users={users}
+                  loading={loading}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  changePage={changePage}
+                />
               </Tab.Pane>
               <Tab.Pane eventKey='second'>
                 <TableManufacturer
