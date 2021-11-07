@@ -30,7 +30,8 @@ const AdminHome = () => {
   // console.log(users);
   useEffect(() => {
     dispatch(getAllUsers(userPage));
-  }, [dispatch, userPage]);
+    dispatch(getAllManufacturerAdmin(manufacturerPage));
+  }, [dispatch, userPage, manufacturerPage]);
 
   const callManufacturer = () => {
     dispatch(getAllManufacturerAdmin(manufacturerPage));

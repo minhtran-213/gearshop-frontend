@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 
 import { Modal } from 'react-bootstrap';
-import { addNewManufacturer } from '../../redux/actions/ManufacturerAction';
+import { updateManufacturer } from '../../redux/actions/ManufacturerAction';
 import { useDispatch } from 'react-redux';
 
-const MyModal = ({ isOpen, hideModal, title, onSave, body }) => {
+const ManuFacturerUpdateModal = ({
+  isOpen,
+  hideModal,
+  title,
+  onSave,
+  body,
+  manufacturer,
+}) => {
   const [manuRequest, setManuRequest] = useState();
   const dispatch = useDispatch();
   return (
@@ -12,21 +19,25 @@ const MyModal = ({ isOpen, hideModal, title, onSave, body }) => {
       id='addNewForm'
       onSubmit={(event) => {
         event.preventDefault();
-        dispatch(addNewManufacturer(manuRequest));
+        dispatch(updateManufacturer(manuRequest));
       }}>
       <Modal show={isOpen} onHide={hideModal}>
         <Modal.Header>
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <label for='name'>Name</label>
+          <label htmlFor='name'>Name</label>
+          <input type='hidden' value={manufacturer.id} />
           <input
+            value={manufacturer.name}
             onChange={(event) => {
               const name = event.target.value;
-              setManuRequest({ ...manuRequest, ...{ name } });
+              setManuRequest({
+                ...manuRequest,
+                ...{ name, id: manufacturer.id },
+              });
             }}
             type='text'
-            placeholder='Enter manufacturer name'
           />
         </Modal.Body>
         <Modal.Footer>
@@ -34,7 +45,7 @@ const MyModal = ({ isOpen, hideModal, title, onSave, body }) => {
             Cancel
           </button>
           <button
-            onClick={() => window.location.reload()}
+            // onClick={() => window.location.reload()}
             form='addNewForm'
             type='submit'
             className='btn btn-primary'>
@@ -46,4 +57,4 @@ const MyModal = ({ isOpen, hideModal, title, onSave, body }) => {
   );
 };
 
-export default MyModal;
+export default ManuFacturerUpdateModal;

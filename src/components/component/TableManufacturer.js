@@ -1,7 +1,8 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useState } from 'react';
 
-import MyModal from './MyModal';
+import ManuFacturerAddModal from './ManuFacturerAddModal';
+import ManuFacturerUpdateModal from './ManufacturerUpdateModal';
 import Paging from './Paging';
 
 const TableManufacturer = ({
@@ -12,9 +13,14 @@ const TableManufacturer = ({
   changePage,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [currentManufacturer, setCurrentManufacturer] = useState({});
 
   const hideModal = () => {
     setShowModal(false);
+  };
+  const hideUpdateModal = () => {
+    setShowUpdateModal(false);
   };
   return (
     <>
@@ -22,10 +28,16 @@ const TableManufacturer = ({
         <h1>Loading...</h1>
       ) : (
         <Container fluid>
-          <MyModal
+          <ManuFacturerAddModal
             hideModal={hideModal}
             isOpen={showModal}
             title='New manufacturer'
+          />
+          <ManuFacturerUpdateModal
+            hideModal={hideUpdateModal}
+            isOpen={showUpdateModal}
+            title='Update manufacturer'
+            manufacturer={currentManufacturer}
           />
           <Row>
             <Col sm={10}>
@@ -34,6 +46,8 @@ const TableManufacturer = ({
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Update</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -41,6 +55,19 @@ const TableManufacturer = ({
                     <tr key={manufacturer.id}>
                       <th>{manufacturer.id}</th>
                       <th>{manufacturer.name}</th>
+                      <th>
+                        <button
+                          onClick={() => {
+                            setCurrentManufacturer(manufacturer);
+                            setShowUpdateModal(true);
+                          }}
+                          className='btn btn-primary'>
+                          Update
+                        </button>
+                      </th>
+                      <th>
+                        <button className='btn btn-danger'>Delete</button>
+                      </th>
                     </tr>
                   ))}
                 </tbody>

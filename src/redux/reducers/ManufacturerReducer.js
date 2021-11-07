@@ -28,6 +28,8 @@ const manufacturerReducer = (state = initialState, action) => {
       return { ...state, ...{ error: action.payload } };
     case ManufacturerAdminType.ADD_MANUFACTURER:
       return { ...state, ...{ message: action.payload } };
+    case ManufacturerAdminType.UPDATE_MANUFACTURER:
+      return { ...state, ...{ message: action.payload } };
     default:
       return state;
   }

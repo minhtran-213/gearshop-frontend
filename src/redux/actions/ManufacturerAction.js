@@ -28,4 +28,18 @@ const addNewManufacturer = (manufacturer) => async (dispatch) => {
     console.log(error);
   }
 };
-export { getAllManufacturerAdmin, addNewManufacturer };
+
+const updateManufacturer = (manufacturer) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/admin/manufacturer/${manufacturer.id}`, {
+      name: manufacturer.name,
+    });
+    dispatch({
+      type: ManufacturerAdminType.UPDATE_MANUFACTURER,
+      payload: response.data.successCode,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export { getAllManufacturerAdmin, addNewManufacturer, updateManufacturer };
