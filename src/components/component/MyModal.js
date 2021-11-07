@@ -1,35 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const MyModal = () => {
+import { Modal } from 'react-bootstrap';
+import { addNewManufacturer } from '../../redux/actions/ManufacturerAction';
+import { useDispatch } from 'react-redux';
+
+const MyModal = ({ isOpen, hideModal, title, onSave, body }) => {
+  const [manuRequest, setManuRequest] = useState();
+  const dispatch = useDispatch();
   return (
-    <div className='modal-dialog modal-dialog-centered'>
-      <div className='modal-content'>
-        <div className='modal-header'>
-          <h5 className='modal-title' id='exampleModalCenterTitle'>
-            Modal title
-          </h5>
-          <button
-            type='button'
-            className='btn-close'
-            data-bs-dismiss='modal'
-            aria-label='Close'></button>
-        </div>
-        <div className='modal-body'>
-          <p>This is a vertically centered modal</p>
-        </div>
-        <div className='modal-footer'>
-          <button
-            type='button'
-            className='btn btn-secondary'
-            data-bs-dismiss='modal'>
-            Close
+    <form
+      id='addNewForm'
+      onSubmit={(event) => {
+        event.preventDefault();
+        dispatch(addNewManufacturer(manuRequest));
+      }}>
+      <Modal show={isOpen} onHide={hideModal}>
+        <Modal.Header>
+          <Modal.Title>{title}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <label for='name'>Name</label>
+          <input
+            onChange={(event) => {
+              const name = event.target.value;
+              setManuRequest({ ...manuRequest, ...{ name } });
+            }}
+            type='text'
+            placeholder='Enter manufacturer name'
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <button className='btn btn-secondary' onClick={hideModal}>
+            Cancel
           </button>
-          <button type='button' className='btn btn-primary'>
-            Save changes
+          <button
+            onClick={() => window.location.reload()}
+            form='addNewForm'
+            type='submit'
+            className='btn btn-primary'>
+            Save
           </button>
-        </div>
-      </div>
-    </div>
+        </Modal.Footer>
+      </Modal>
+    </form>
   );
 };
 

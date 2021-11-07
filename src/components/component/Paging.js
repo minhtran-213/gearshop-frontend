@@ -1,8 +1,8 @@
 import { Pagination } from 'react-bootstrap';
 import React from 'react';
 
-const Paging = ({ activePage, totalPage, pagination }) => {
-  let active = activePage;
+const Paging = ({ currentPage, totalPage, pagination }) => {
+  let active = currentPage;
   let items = [];
   for (let number = 0; number < totalPage; number++) {
     items.push(

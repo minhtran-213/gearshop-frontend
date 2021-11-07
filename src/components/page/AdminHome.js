@@ -14,34 +14,41 @@ const AdminHome = () => {
   const dispatch = useDispatch();
   const getUsers = useSelector((state) => state.user);
   const getManufacturers = useSelector((state) => state.manufacturer);
-  const { loading, users, totalPages, currentPage } = getUsers;
-  const { manufacturerLoading, manufacturers } = getManufacturers;
-  const [page, setPage] = useState(0);
+  const { loading, users, userTotalPages, userCurrentPage } = getUsers;
+  const {
+    manufacturerLoading,
+    manufacturers,
+    manufacturerCurrentPage,
+    manufacturerTotalPages,
+  } = getManufacturers;
+  const [userPage, setUserPage] = useState(0);
   const [userToggler, setUserToggle] = useState(true);
+  const [manufacturerPage, setManufacturerPage] = useState(0);
   const { addressLoading, addresses } = useSelector(
     (state) => state.addressAdmin
   );
   // console.log(users);
   useEffect(() => {
-    dispatch(getAllUsers(page));
-  }, [dispatch, page]);
+    dispatch(getAllUsers(userPage));
+  }, [dispatch, userPage]);
 
   const callManufacturer = () => {
-    dispatch(getAllManufacturerAdmin());
+    dispatch(getAllManufacturerAdmin(manufacturerPage));
   };
 
   const callAddress = (userId) => {
     dispatch(getAllAddressInAdmin(userId));
   };
-  const changePage = (pageChanged) => {
-    setPage(pageChanged);
+  const changePageUser = (pageChanged) => {
+    setUserPage(pageChanged);
+  };
+  const changeManufacturerPage = (pageChanged) => {
+    setManufacturerPage(pageChanged);
   };
   const sorting = (sorter) => {
-    dispatch(sortUser(page, sorter));
+    dispatch(sortUser(userPage, sorter));
   };
   const watchUserAddress = (isWatching) => {
-    console.log(isWatching);
-    console.log(userToggler);
     setUserToggle(isWatching);
   };
   return (
@@ -67,9 +74,9 @@ const AdminHome = () => {
                   <TableUser
                     users={users}
                     loading={loading}
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    changePage={changePage}
+                    currentPage={userCurrentPage}
+                    totalPages={userTotalPages}
+                    changePage={changePageUser}
                     sorting={sorting}
                     userAddress={watchUserAddress}
                     findAddress={callAddress}
@@ -86,6 +93,9 @@ const AdminHome = () => {
                 <TableManufacturer
                   manufacturers={manufacturers}
                   loading={manufacturerLoading}
+                  currentPage={manufacturerCurrentPage}
+                  changePage={changeManufacturerPage}
+                  totalPage={manufacturerTotalPages}
                 />
               </Tab.Pane>
             </Tab.Content>

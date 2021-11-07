@@ -3,9 +3,9 @@ import { UserAdminType } from '../actions/ActionTypes';
 const initialState = {
   loading: false,
   users: [],
-  currentPage: 0,
-  totalPages: 0,
-  totalElements: 0,
+  userCurrentPage: 0,
+  userTotalPages: 0,
+  userTotalElements: 0,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -18,9 +18,9 @@ const userReducer = (state = initialState, action) => {
         ...{
           loading: false,
           users: action.payload.content,
-          currentPage: action.payload.currentPage,
-          totalPages: action.payload.totalPages,
-          totalElements: action.payload.totalElements,
+          userCurrentPage: action.payload.currentPage,
+          userTotalPages: action.payload.totalPages,
+          userTotalElements: action.payload.totalElements,
         },
       };
     case UserAdminType.GET_USERS_FAIL:
