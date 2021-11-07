@@ -1,10 +1,12 @@
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { getAllUsers, sort } from '../../redux/actions/UserAction';
+import { getAllUsers, sortUser } from '../../redux/actions/UserAction';
 import { useDispatch, useSelector } from 'react-redux';
 
+import TableAddress from '../component/TableAddress';
 import TableManufacturer from '../component/TableManufacturer';
 import TableUser from '../component/TableUser';
+import { getAllAddressInAdmin } from '../../redux/actions/AddressAction';
 import { getAllManufacturerAdmin } from '../../redux/actions/ManufacturerAction';
 import { useEffect } from 'react';
 
@@ -15,6 +17,10 @@ const AdminHome = () => {
   const { loading, users, totalPages, currentPage } = getUsers;
   const { manufacturerLoading, manufacturers } = getManufacturers;
   const [page, setPage] = useState(0);
+  const [userToggler, setUserToggle] = useState(true);
+  const { addressLoading, addresses } = useSelector(
+    (state) => state.addressAdmin
+  );
   // console.log(users);
   useEffect(() => {
     dispatch(getAllUsers(page));
@@ -23,11 +29,20 @@ const AdminHome = () => {
   const callManufacturer = () => {
     dispatch(getAllManufacturerAdmin());
   };
+
+  const callAddress = (userId) => {
+    dispatch(getAllAddressInAdmin(userId));
+  };
   const changePage = (pageChanged) => {
     setPage(pageChanged);
   };
   const sorting = (sorter) => {
-    dispatch(sort(page, sorter));
+    dispatch(sortUser(page, sorter));
+  };
+  const watchUserAddress = (isWatching) => {
+    console.log(isWatching);
+    console.log(userToggler);
+    setUserToggle(isWatching);
   };
   return (
     <div className='m-2'>
@@ -48,14 +63,23 @@ const AdminHome = () => {
           <Col sm={9}>
             <Tab.Content>
               <Tab.Pane eventKey='first'>
-                <TableUser
-                  users={users}
-                  loading={loading}
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  changePage={changePage}
-                  sorting={sorting}
-                />
+                {userToggler ? (
+                  <TableUser
+                    users={users}
+                    loading={loading}
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    changePage={changePage}
+                    sorting={sorting}
+                    userAddress={watchUserAddress}
+                    findAddress={callAddress}
+                  />
+                ) : (
+                  <TableAddress
+                    loading={addressLoading}
+                    addresses={addresses}
+                  />
+                )}
               </Tab.Pane>
               <Tab.Pane eventKey='second'>
                 <TableManufacturer

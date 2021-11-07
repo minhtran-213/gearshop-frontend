@@ -1,3 +1,4 @@
+import addressReducer from './AddressAdminReduce';
 import authReducer from './AuthReducer';
 import { combineReducers } from 'redux';
 import manufacturerReducer from './ManufacturerReducer';
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   productDetail: productDetailReducer,
   user: userReducer,
   manufacturer: manufacturerReducer,
+  addressAdmin: addressReducer,
 });
 
 export default reducers;

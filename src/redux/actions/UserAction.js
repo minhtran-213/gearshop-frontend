@@ -16,7 +16,7 @@ const getAllUsers = (page) => async (dispatch) => {
   }
 };
 
-const sort = (page, sorter) => async (dispatch) => {
+const sortUser = (page, sorter) => async (dispatch) => {
   try {
     const response = await axios.get(
       `/admin/users?page=${page}&sort=${sorter.name}&direction=${sorter.direction}`
@@ -29,4 +29,4 @@ const sort = (page, sorter) => async (dispatch) => {
   }
 };
 
-export { getAllUsers, sort };
+export { getAllUsers, sortUser };

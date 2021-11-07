@@ -11,6 +11,8 @@ const TableUser = ({
   totalPages,
   changePage,
   sorting,
+  findAddress,
+  userAddress,
 }) => {
   const [modalShow, setModalShow] = useState(false);
   const [sort, setSort] = useState({});
@@ -296,7 +298,14 @@ const TableUser = ({
                       <th>{user.gender ? user.gender : 'empty'}</th>
                       <th>{moment(user.dateCreated).format('MMMM Do YYYY')}</th>
                       <th>
-                        <button className='btn btn-success'>View Detail</button>
+                        <button
+                          onClick={() => {
+                            findAddress(user.id);
+                            userAddress(false);
+                          }}
+                          className='btn btn-success'>
+                          View Detail
+                        </button>
                       </th>
                     </tr>
                   ))}
