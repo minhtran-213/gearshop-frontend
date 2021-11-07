@@ -6,14 +6,27 @@ const getAllUsers = (page) => async (dispatch) => {
     dispatch({ type: UserAdminType.GET_USERS_REQUEST });
     const response = await axios.get(`/admin/users?page=${page}`);
     const { object } = response.data;
-    console.log(object);
     dispatch({
       type: UserAdminType.GET_USERS_SUCCESS,
       payload: object,
     });
   } catch (error) {
     console.log(error);
+    dispatch({ type: UserAdminType.GET_USERS_FAIL });
   }
 };
 
-export { getAllUsers };
+const sort = (page, sorter) => async (dispatch) => {
+  try {
+    const response = await axios.get(
+      `/admin/users?page=${page}&sort=${sorter.name}&direction=${sorter.direction}`
+    );
+    const { object } = response.data;
+    dispatch({ type: UserAdminType.GET_USERS_SUCCESS, payload: object });
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: UserAdminType.GET_USERS_FAIL });
+  }
+};
+
+export { getAllUsers, sort };

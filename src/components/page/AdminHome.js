@@ -1,11 +1,11 @@
 import { Col, Nav, Row, Tab } from 'react-bootstrap';
 import React, { useState } from 'react';
+import { getAllUsers, sort } from '../../redux/actions/UserAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TableManufacturer from '../component/TableManufacturer';
 import TableUser from '../component/TableUser';
 import { getAllManufacturerAdmin } from '../../redux/actions/ManufacturerAction';
-import { getAllUsers } from '../../redux/actions/UserAction';
 import { useEffect } from 'react';
 
 const AdminHome = () => {
@@ -25,6 +25,9 @@ const AdminHome = () => {
   };
   const changePage = (pageChanged) => {
     setPage(pageChanged);
+  };
+  const sorting = (sorter) => {
+    dispatch(sort(page, sorter));
   };
   return (
     <div className='m-2'>
@@ -51,6 +54,7 @@ const AdminHome = () => {
                   currentPage={currentPage}
                   totalPages={totalPages}
                   changePage={changePage}
+                  sorting={sorting}
                 />
               </Tab.Pane>
               <Tab.Pane eventKey='second'>
