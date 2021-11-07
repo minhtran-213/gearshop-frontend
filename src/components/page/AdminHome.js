@@ -78,6 +78,7 @@ const AdminHome = () => {
                   <TableAddress
                     loading={addressLoading}
                     addresses={addresses}
+                    userAddress={watchUserAddress}
                   />
                 )}
               </Tab.Pane>
