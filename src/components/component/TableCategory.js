@@ -2,8 +2,8 @@ import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useState } from 'react';
 
 import CategoryDetail from './CategoryDetail';
+import CategoryUpdate from './CategoryUpdate';
 import Paging from './Paging';
-import axios from 'axios';
 
 const TableCategory = ({
   categories,
@@ -12,12 +12,9 @@ const TableCategory = ({
   totalPage,
   changePage,
 }) => {
-  const [categoryDetail, setCategoryDetail] = useState({});
+  const [categoryId, setCategoryId] = useState();
   const [showCategoryDetail, setShowCategoryDetail] = useState(false);
-  const getCategory = async (id) => {
-    const response = await axios.get(`/category/${id}`);
-    setCategoryDetail(response.data.object);
-  };
+  const [showUpdateCategory, setShowUpdateCategory] = useState(false);
   return (
     <>
       {loading ? (
@@ -29,7 +26,12 @@ const TableCategory = ({
               setShowCategoryDetail(false);
             }}
             show={showCategoryDetail}
-            category={categoryDetail}
+            category={categoryId}
+          />
+          <CategoryUpdate
+            show={showUpdateCategory}
+            onHide={() => setShowUpdateCategory(false)}
+            category={categoryId}
           />
           <Row>
             <Col sm={10}>
@@ -52,7 +54,7 @@ const TableCategory = ({
                         <p
                           onClick={() => {
                             setShowCategoryDetail(true);
-                            getCategory(category.id);
+                            setCategoryId(category.id);
                           }}
                           style={{
                             textDecoration: 'underline',
@@ -62,7 +64,13 @@ const TableCategory = ({
                         </p>
                       </th>
                       <th>
-                        <button>Update</button>
+                        <button
+                          onClick={() => {
+                            setShowUpdateCategory(true);
+                            setCategoryId(category.id);
+                          }}>
+                          Update
+                        </button>
                       </th>
                       <th>
                         <button>Delete</button>

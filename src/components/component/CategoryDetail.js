@@ -1,26 +1,34 @@
 import { Col, Modal, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 
-import React from 'react';
+import axios from 'axios';
 
 const CategoryDetail = ({ category, show, onHide }) => {
+  const [cateRequest, setCateRequest] = useState({});
+  useEffect(async () => {
+    const response = await axios.get(`/category/${category}`);
+    setCateRequest(response.data.object);
+  }, [category]);
   return (
     <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>{category.name}</Modal.Title>
+        <Modal.Title>{cateRequest.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Row>
           <Col>Id</Col>
-          <Col>{category.id}</Col>
+          <Col>{cateRequest.id}</Col>
         </Row>
         <Row>
           <Col>Name</Col>
-          <Col>{category.name}</Col>
+          <Col>{cateRequest.name}</Col>
         </Row>
         <Row>
           <Col>Parent Category</Col>
           <Col>
-            {category.parentCategory ? category.parentCategory.name : 'empty'}
+            {cateRequest.parentCategory
+              ? cateRequest.parentCategory.name
+              : 'empty'}
           </Col>
         </Row>
       </Modal.Body>

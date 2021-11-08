@@ -5,7 +5,6 @@ const getCategories = (page) => async (dispatch) => {
   try {
     dispatch({ type: CategoryAdminType.GET_CATEGORY_REQUEST });
     const response = await axios.get(`/admin/categories?page=${page}`);
-    console.log(response);
     const { object } = response.data;
     dispatch({ type: CategoryAdminType.GET_CATEGORY_SUCCESS, payload: object });
   } catch (error) {
@@ -13,4 +12,19 @@ const getCategories = (page) => async (dispatch) => {
   }
 };
 
-export { getCategories };
+const updateCategory = (category) => async (dispatch) => {
+  try {
+    const response = await axios.put(
+      `/admin/category/${category.id}`,
+      category
+    );
+    dispatch({
+      type: CategoryAdminType.UPDATE_CATEGORY,
+      payload: response.data.successCode,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export { getCategories, updateCategory };
