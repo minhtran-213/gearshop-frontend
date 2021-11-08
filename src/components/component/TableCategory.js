@@ -1,7 +1,9 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
+import React, { useState } from 'react';
 
+import CategoryDetail from './CategoryDetail';
 import Paging from './Paging';
-import React from 'react';
+import axios from 'axios';
 
 const TableCategory = ({
   categories,
@@ -10,12 +12,25 @@ const TableCategory = ({
   totalPage,
   changePage,
 }) => {
+  const [categoryDetail, setCategoryDetail] = useState({});
+  const [showCategoryDetail, setShowCategoryDetail] = useState(false);
+  const getCategory = async (id) => {
+    const response = await axios.get(`/category/${id}`);
+    setCategoryDetail(response.data.object);
+  };
   return (
     <>
       {loading ? (
         <h1>Loading...</h1>
       ) : (
         <Container>
+          <CategoryDetail
+            onHide={() => {
+              setShowCategoryDetail(false);
+            }}
+            show={showCategoryDetail}
+            category={categoryDetail}
+          />
           <Row>
             <Col sm={10}>
               <Table responsive variant='dark'>
@@ -35,6 +50,10 @@ const TableCategory = ({
                       <th>{category.name}</th>
                       <th>
                         <p
+                          onClick={() => {
+                            setShowCategoryDetail(true);
+                            getCategory(category.id);
+                          }}
                           style={{
                             textDecoration: 'underline',
                             cursor: 'pointer',
