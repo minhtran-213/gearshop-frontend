@@ -30,10 +30,12 @@ const addNewManufacturer = (manufacturer) => async (dispatch) => {
 };
 
 const updateManufacturer = (manufacturer) => async (dispatch) => {
+  // console.log(manufacturer.id);
   try {
-    const response = await axios.put(`/admin/manufacturer/${manufacturer.id}`, {
-      name: manufacturer.name,
-    });
+    const response = await axios.put(
+      `/admin/manufacturer/${manufacturer.id}`,
+      manufacturer
+    );
     dispatch({
       type: ManufacturerAdminType.UPDATE_MANUFACTURER,
       payload: response.data.successCode,
