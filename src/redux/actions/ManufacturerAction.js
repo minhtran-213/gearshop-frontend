@@ -44,4 +44,22 @@ const updateManufacturer = (manufacturer) => async (dispatch) => {
     console.log(error);
   }
 };
-export { getAllManufacturerAdmin, addNewManufacturer, updateManufacturer };
+
+const deleteManufacturer = (id) => async (dispatch) => {
+  console.log(id);
+  try {
+    const response = await axios.delete(`/admin/manufacturer/${id}`);
+    dispatch({
+      type: ManufacturerAdminType.DELETE_MANUFACTURER,
+      payload: response.data.successCode,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export {
+  getAllManufacturerAdmin,
+  addNewManufacturer,
+  updateManufacturer,
+  deleteManufacturer,
+};

@@ -8,8 +8,6 @@ const ManuFacturerUpdateModal = ({
   isOpen,
   hideModal,
   title,
-  onSave,
-  body,
   manufacturer,
 }) => {
   const [manuRequest, setManuRequest] = useState(manufacturer);

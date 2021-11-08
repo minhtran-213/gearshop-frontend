@@ -1,6 +1,7 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useState } from 'react';
 
+import DeletePopUp from './DeletePopUp';
 import ManuFacturerAddModal from './ManuFacturerAddModal';
 import ManuFacturerUpdateModal from './ManufacturerUpdateModal';
 import Paging from './Paging';
@@ -15,6 +16,8 @@ const TableManufacturer = ({
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [currentManufacturer, setCurrentManufacturer] = useState({});
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [currentId, setCurrentId] = useState({});
 
   const hideModal = () => {
     setShowModal(false);
@@ -22,6 +25,12 @@ const TableManufacturer = ({
   const hideUpdateModal = () => {
     setShowUpdateModal(false);
   };
+
+  const hideDeletePopup = () => {
+    setShowDeletePopup(false);
+    setCurrentId(undefined);
+  };
+
   return (
     <>
       {loading ? (
@@ -38,6 +47,11 @@ const TableManufacturer = ({
             isOpen={showUpdateModal}
             title='Update manufacturer'
             manufacturer={currentManufacturer}
+          />
+          <DeletePopUp
+            show={showDeletePopup}
+            hide={hideDeletePopup}
+            id={currentId}
           />
           <Row>
             <Col sm={10}>
@@ -66,7 +80,14 @@ const TableManufacturer = ({
                         </button>
                       </th>
                       <th>
-                        <button className='btn btn-danger'>Delete</button>
+                        <button
+                          onClick={() => {
+                            setCurrentId(manufacturer.id);
+                            setShowDeletePopup(true);
+                          }}
+                          className='btn btn-danger'>
+                          Delete
+                        </button>
                       </th>
                     </tr>
                   ))}
