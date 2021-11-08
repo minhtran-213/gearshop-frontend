@@ -18,7 +18,8 @@ export const ProductDetailActionType = {
   GET_PRODUCT_DETAIL_FAIL: 'GET_PRODUCT_DETAIL_FAIL',
 };
 
-export const CategoryType = {
+export const CategoryAdminType = {
+  GET_CATEGORY_REQUEST: 'GET_CATEGORY_REQUEST',
   GET_CATEGORY_SUCCESS: 'GET_CATEGORY_SUCCESS',
   GET_CATEGORY_FAIL: 'GET_CATEGORY_FAIL',
 };

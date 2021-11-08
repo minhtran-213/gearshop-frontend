@@ -4,16 +4,25 @@ import { getAllUsers, sortUser } from '../../redux/actions/UserAction';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TableAddress from '../component/TableAddress';
+import TableCategory from '../component/TableCategory';
 import TableManufacturer from '../component/TableManufacturer';
 import TableUser from '../component/TableUser';
 import { getAllAddressInAdmin } from '../../redux/actions/AddressAction';
 import { getAllManufacturerAdmin } from '../../redux/actions/ManufacturerAction';
+import { getCategories } from '../../redux/actions/CategoryAction';
 import { useEffect } from 'react';
 
 const AdminHome = () => {
   const dispatch = useDispatch();
   const getUsers = useSelector((state) => state.user);
   const getManufacturers = useSelector((state) => state.manufacturer);
+  const getCategoryAdmin = useSelector((state) => state.categoryAdmin);
+  const {
+    categoryAdminLoading,
+    categories,
+    categoryCurrentPage,
+    categoryTotalPages,
+  } = getCategoryAdmin;
   const { loading, users, userTotalPages, userCurrentPage } = getUsers;
   const {
     manufacturerLoading,
@@ -24,6 +33,7 @@ const AdminHome = () => {
   const [userPage, setUserPage] = useState(0);
   const [userToggler, setUserToggle] = useState(true);
   const [manufacturerPage, setManufacturerPage] = useState(0);
+  const [categoryPage, setCategoryPage] = useState(0);
   const { addressLoading, addresses } = useSelector(
     (state) => state.addressAdmin
   );
@@ -31,7 +41,8 @@ const AdminHome = () => {
   useEffect(() => {
     dispatch(getAllUsers(userPage));
     dispatch(getAllManufacturerAdmin(manufacturerPage));
-  }, [dispatch, userPage, manufacturerPage]);
+    dispatch(getCategories(categoryPage));
+  }, [dispatch, userPage, manufacturerPage, categoryPage]);
 
   const callManufacturer = () => {
     dispatch(getAllManufacturerAdmin(manufacturerPage));
@@ -46,9 +57,13 @@ const AdminHome = () => {
   const changeManufacturerPage = (pageChanged) => {
     setManufacturerPage(pageChanged);
   };
+  const changeCategoryPage = (pageChanged) => {
+    setCategoryPage(pageChanged);
+  };
   const sorting = (sorter) => {
     dispatch(sortUser(userPage, sorter));
   };
+
   const watchUserAddress = (isWatching) => {
     setUserToggle(isWatching);
   };
@@ -65,6 +80,9 @@ const AdminHome = () => {
                 <Nav.Link onClick={callManufacturer} eventKey='second'>
                   Manufacturer
                 </Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey='third'>Category</Nav.Link>
               </Nav.Item>
             </Nav>
           </Col>
@@ -97,6 +115,15 @@ const AdminHome = () => {
                   currentPage={manufacturerCurrentPage}
                   changePage={changeManufacturerPage}
                   totalPage={manufacturerTotalPages}
+                />
+              </Tab.Pane>
+              <Tab.Pane eventKey='third'>
+                <TableCategory
+                  categories={categories}
+                  loading={categoryAdminLoading}
+                  currentPage={categoryCurrentPage}
+                  totalPage={categoryTotalPages}
+                  changePage={changeCategoryPage}
                 />
               </Tab.Pane>
             </Tab.Content>

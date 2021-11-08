@@ -8,7 +8,6 @@ const DeletePopUp = ({ show, id, hide }) => {
   const confirmDelete = () => {
     dispatch(deleteManufacturer(id));
   };
-  console.log(id);
   return (
     <form id='deleteConfirm' onSubmit={confirmDelete}>
       <Modal show={show} onHide={hide}>

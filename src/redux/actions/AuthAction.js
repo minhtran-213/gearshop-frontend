@@ -6,15 +6,12 @@ const RegisterAuthAction = (userState, history) => {
     try {
       const response = await axios.post('/auth/signup', userState);
       const { data } = response;
-      console.log(data);
       if (data.errorCode) {
-        console.log('errorCode in action:', data.errorCode);
         dispatch({
           type: AuthActionType.REGISTER_FAIL,
           payload: data.errorCode,
         });
       } else {
-        console.log('successCode in action: ', data.message);
         history.push('/signin');
         dispatch({
           type: AuthActionType.REGISTER_SUCCESS,
@@ -61,7 +58,6 @@ const LogoutAuthAction = (history) => {
   return (dispatch) => {
     history.push('/signin');
     dispatch({ type: AuthActionType.LOGOUT });
-    // console.log(history);
   };
 };
 

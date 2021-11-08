@@ -5,7 +5,6 @@ const getAllManufacturerAdmin = (page) => async (dispatch) => {
   try {
     dispatch({ type: ManufacturerAdminType.GET_MANUFACTURER_REQUEST });
     const response = await axios.get(`/admin/manufacturers?page=${page}`);
-    // console.log(response);
     const { object } = response.data;
     dispatch({
       type: ManufacturerAdminType.GET_MANUFACTURER_SUCCESS,
@@ -19,7 +18,6 @@ const getAllManufacturerAdmin = (page) => async (dispatch) => {
 const addNewManufacturer = (manufacturer) => async (dispatch) => {
   try {
     const response = await axios.post('/admin/manufacturer', manufacturer);
-    console.log(response);
     dispatch({
       type: ManufacturerAdminType.ADD_MANUFACTURER,
       payload: response.data.successCode,
@@ -46,7 +44,6 @@ const updateManufacturer = (manufacturer) => async (dispatch) => {
 };
 
 const deleteManufacturer = (id) => async (dispatch) => {
-  console.log(id);
   try {
     const response = await axios.delete(`/admin/manufacturer/${id}`);
     dispatch({
