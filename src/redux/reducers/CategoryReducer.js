@@ -26,6 +26,10 @@ const categoryReducer = (state = initState, action) => {
       };
     case CategoryAdminType.GET_CATEGORY_FAIL:
       return state;
+    case CategoryAdminType.UPDATE_CATEGORY:
+      return { ...state, ...{ message: action.payload } };
+    case CategoryAdminType.ADD_CATEGORY:
+      return { ...state, ...{ message: action.payload } };
     default:
       return state;
   }

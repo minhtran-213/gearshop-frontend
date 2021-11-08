@@ -1,6 +1,7 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useState } from 'react';
 
+import CategoryAdd from './CategoryAdd';
 import CategoryDetail from './CategoryDetail';
 import CategoryUpdate from './CategoryUpdate';
 import Paging from './Paging';
@@ -15,6 +16,7 @@ const TableCategory = ({
   const [categoryId, setCategoryId] = useState();
   const [showCategoryDetail, setShowCategoryDetail] = useState(false);
   const [showUpdateCategory, setShowUpdateCategory] = useState(false);
+  const [showAddCategory, setShowCategoryAdd] = useState(false);
   return (
     <>
       {loading ? (
@@ -32,6 +34,10 @@ const TableCategory = ({
             show={showUpdateCategory}
             onHide={() => setShowUpdateCategory(false)}
             category={categoryId}
+          />
+          <CategoryAdd
+            show={showAddCategory}
+            onHide={() => setShowCategoryAdd(false)}
           />
           <Row>
             <Col sm={10}>
@@ -85,6 +91,15 @@ const TableCategory = ({
                   pagination={changePage}
                   totalPage={totalPage}
                 />
+              </div>
+            </Col>
+            <Col>
+              <div className='d-flex justify-content-center'>
+                <button
+                  onClick={() => setShowCategoryAdd(true)}
+                  className='btn btn-success'>
+                  Add new
+                </button>
               </div>
             </Col>
           </Row>

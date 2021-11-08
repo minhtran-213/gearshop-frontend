@@ -4,7 +4,7 @@ import { Modal } from 'react-bootstrap';
 import { addNewManufacturer } from '../../redux/actions/ManufacturerAction';
 import { useDispatch } from 'react-redux';
 
-const ManuFacturerAddModal = ({ isOpen, hideModal, title, onSave, body }) => {
+const ManuFacturerAddModal = ({ isOpen, hideModal, title, body }) => {
   const [manuRequest, setManuRequest] = useState();
   const dispatch = useDispatch();
   return (

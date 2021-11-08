@@ -18,6 +18,7 @@ const updateCategory = (category) => async (dispatch) => {
       `/admin/category/${category.id}`,
       category
     );
+    console.log(response);
     dispatch({
       type: CategoryAdminType.UPDATE_CATEGORY,
       payload: response.data.successCode,
@@ -26,5 +27,15 @@ const updateCategory = (category) => async (dispatch) => {
     console.log(error);
   }
 };
-
-export { getCategories, updateCategory };
+const addNewCategory = (category) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/admin/category`, category);
+    dispatch({
+      type: CategoryAdminType.ADD_CATEGORY,
+      payload: response.data.successCode,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export { getCategories, updateCategory, addNewCategory };
