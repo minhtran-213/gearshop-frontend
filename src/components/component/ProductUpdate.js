@@ -1,11 +1,8 @@
 import { Col, Modal, Row } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-import {
-  addNewProduct,
-  updateProduct,
-} from '../../redux/actions/ProductsAction';
 
 import axios from 'axios';
+import { updateProduct } from '../../redux/actions/ProductsAction';
 import { useDispatch } from 'react-redux';
 
 const ProductUpdate = ({ show, onHide, productId }) => {
@@ -19,24 +16,27 @@ const ProductUpdate = ({ show, onHide, productId }) => {
     manufacturerId: 0,
     categoryId: 0,
   });
-  useEffect(async () => {
-    const manuRes = await axios.get('/manufacturers');
-    const catRes = await axios.get('/admin/basicCategories');
-    const prodRes = await axios.get(`/admin/product/${productId}`);
+  useEffect(() => {
+    const initData = async () => {
+      const manuRes = await axios.get('/manufacturers');
+      const catRes = await axios.get('/admin/basicCategories');
+      const prodRes = await axios.get(`/admin/product/${productId}`);
 
-    const { object } = prodRes.data;
-    setManufacturer(manuRes.data.object);
-    setCategory(catRes.data.object);
-    setProductRequest({
-      ...productRequest,
-      ...{
-        name: object.name,
-        description: object.description,
-        manufacturerId: object.manufacturerId,
-        categoryId: object.categoryId,
-      },
-    });
-  }, [productId]);
+      const { object } = prodRes.data;
+      setManufacturer(manuRes.data.object);
+      setCategory(catRes.data.object);
+      setProductRequest({
+        ...productRequest,
+        ...{
+          name: object.name,
+          description: object.description,
+          manufacturerId: object.manufacturerId,
+          categoryId: object.categoryId,
+        },
+      });
+    };
+    return initData;
+  }, [productId, productRequest]);
   const handleManuChange = (event) => {
     setProductRequest({
       ...productRequest,

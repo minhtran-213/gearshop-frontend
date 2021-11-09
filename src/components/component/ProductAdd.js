@@ -15,11 +15,14 @@ const ProductAdd = ({ show, onHide }) => {
     manufacturerId: 0,
     categoryId: 0,
   });
-  useEffect(async () => {
-    const manuRes = await axios.get('/manufacturers');
-    const catRes = await axios.get('/admin/basicCategories');
-    setManufacturer(manuRes.data.object);
-    setCategory(catRes.data.object);
+  useEffect(() => {
+    const initData = async () => {
+      const manuRes = await axios.get('/manufacturers');
+      const catRes = await axios.get('/admin/basicCategories');
+      setManufacturer(manuRes.data.object);
+      setCategory(catRes.data.object);
+    };
+    return initData;
   }, []);
   const handleManuChange = (event) => {
     setProductRequest({

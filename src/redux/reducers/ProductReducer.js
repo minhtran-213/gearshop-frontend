@@ -1,7 +1,4 @@
-import {
-  ProductsActionType,
-  ProductsAdminActionType,
-} from '../actions/ActionTypes';
+import { ProductsActionType } from '../actions/ActionTypes';
 
 const initialState = {
   loading: false,

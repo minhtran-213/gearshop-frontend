@@ -2,19 +2,19 @@ import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
 
 import { IoIosArrowRoundBack } from 'react-icons/io';
-import Paging from './Paging';
 import axios from 'axios';
-import moment from 'moment';
-import { useDispatch } from 'react-redux';
 
 const TableProductDetail = ({ productId, productToggler }) => {
   const [productDetails, setProductDetail] = useState([]);
-  useEffect(async () => {
-    const response = await axios.get(
-      `/admin/productDetails?productId=${productId}`
-    );
-    setProductDetail(response.data.object);
-  }, []);
+  useEffect(() => {
+    const initData = async () => {
+      const response = await axios.get(
+        `/admin/productDetails?productId=${productId}`
+      );
+      setProductDetail(response.data.object);
+    };
+    return initData;
+  }, [productId]);
   return (
     <>
       <Container>

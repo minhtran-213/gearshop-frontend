@@ -5,9 +5,12 @@ import axios from 'axios';
 
 const CategoryDetail = ({ category, show, onHide }) => {
   const [cateRequest, setCateRequest] = useState({});
-  useEffect(async () => {
-    const response = await axios.get(`/category/${category}`);
-    setCateRequest(response.data.object);
+  useEffect(() => {
+    const initData = async () => {
+      const response = await axios.get(`/category/${category}`);
+      setCateRequest(response.data.object);
+    };
+    return initData;
   }, [category]);
   return (
     <Modal show={show} onHide={onHide}>

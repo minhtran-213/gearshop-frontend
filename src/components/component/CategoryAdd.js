@@ -12,9 +12,12 @@ const CategoryAdd = ({ show, onHide }) => {
     parentCategoryId: 0,
   });
   const [categories, setCategories] = useState([]);
-  useEffect(async () => {
-    const categoriesResponse = await axios.get('/admin/basicCategories');
-    setCategories(categoriesResponse.data.object);
+  useEffect(() => {
+    const initData = async () => {
+      const categoriesResponse = await axios.get('/admin/basicCategories');
+      setCategories(categoriesResponse.data.object);
+    };
+    return initData;
   }, []);
   const handleSelectChange = (event) => {
     setCateRequest({

@@ -13,22 +13,25 @@ const CategoryUpdate = ({ show, onHide, category }) => {
     parentCategoryId: 'none',
   });
   const [categories, setCategories] = useState([]);
-  useEffect(async () => {
-    const categoriesResponse = await axios.get('/admin/basicCategories');
-    setCategories(categoriesResponse.data.object);
-    const response = await axios.get(`/category/${category}`);
-    const { object } = response.data;
-    setCateRequest({
-      ...cateRequest,
-      ...{
-        id: object.id,
-        name: object.name,
-        parentCategoryId: object.parentCategory
-          ? object.parentCategory.id
-          : 'none',
-      },
-    });
-  }, [category]);
+  useEffect(() => {
+    const initData = async () => {
+      const categoriesResponse = await axios.get('/admin/basicCategories');
+      setCategories(categoriesResponse.data.object);
+      const response = await axios.get(`/category/${category}`);
+      const { object } = response.data;
+      setCateRequest({
+        ...cateRequest,
+        ...{
+          id: object.id,
+          name: object.name,
+          parentCategoryId: object.parentCategory
+            ? object.parentCategory.id
+            : 'none',
+        },
+      });
+    };
+    return initData;
+  }, [category, cateRequest]);
   const handleSelectChange = (event) => {
     setCateRequest({
       ...cateRequest,
