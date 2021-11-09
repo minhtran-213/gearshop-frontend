@@ -1,24 +1,27 @@
 import { ProductsActionType } from '../actions/ActionTypes';
 
 const initialState = {
-  loading: false,
+  productLoading: false,
   products: [],
-  totalPage: 0,
-  activePage: 0,
+  productDetail: {},
+  totalPages: 0,
+  currentPage: 0,
+  error: '',
+  message: '',
 };
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case ProductsActionType.GET_PRODUCT_REQUEST:
-      return { ...state, ...{ loading: true } };
+      return { ...state, ...{ productLoading: true } };
     case ProductsActionType.GET_PRODUCT_SUCCESS:
       return {
         ...state,
         ...{
-          loading: false,
-          products: action.payload.products,
-          totalPage: action.payload.totalPage,
-          activePage: action.payload.activePage,
+          productLoading: false,
+          products: action.payload.content,
+          totalPages: action.payload.totalPages,
+          currentPage: action.payload.currentPage,
         },
       };
     case ProductsActionType.GET_PRODUCT_FAIL:
@@ -26,7 +29,20 @@ const productReducer = (state = initialState, action) => {
         ...state,
         ...{ error: action.payload },
       };
-
+    case ProductsActionType.GET_PRODUCT_CATEGORY_REQUEST:
+      return { ...state, ...{ productLoading: true } };
+    case ProductsActionType.GET_PRODUCT_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        ...{
+          productLoading: false,
+          products: action.payload.content,
+          totalPages: action.payload.totalPages,
+          currentPage: action.payload.currentPage,
+        },
+      };
+    case ProductsActionType.GET_PRODUCT_CATEGORY_FAIL:
+      return state;
     default:
       return state;
   }

@@ -1,8 +1,7 @@
-import { Col, Container, Image, Row } from 'react-bootstrap';
-import React, { useEffect } from 'react';
+import { Carousel, Col, Container, Row } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 
 import { getProductDetail as listProductDetail } from '../../redux/actions/ProductsAction';
-import style from './ProductDetail.module.css';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
@@ -10,74 +9,97 @@ import { useSelector } from 'react-redux';
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const getProductDetail = useSelector((state) => state.productDetail);
-  const { loading, product, error } = getProductDetail;
+  const { productDetailLoading, productDetail, error } = getProductDetail;
+  const [selectValue, setSelectValue] = useState(0);
+  const [price, setPrice] = useState(0);
 
   const { id } = useParams();
-  // console.log(param);
+
   useEffect(() => {
     dispatch(listProductDetail(id));
   }, [dispatch, id]);
+
+  const handleSelectChange = (event) => {
+    setSelectValue(event.target.value);
+    setPrice(event.target.value);
+  };
   return (
     <>
-      {loading ? (
+      {productDetailLoading ? (
         <h3>Loading...</h3>
       ) : error ? (
         <h3>{error}</h3>
       ) : (
-        <Container className='mx-3 my-5'>
-          <Row>
-            <Col md={5}>
-              <Image fluid src={product.imageurl} rounded />
+        <Container className=' mx-3 my-5'>
+          <Row className='d-flex justify-content-center'>
+            <Col sm={9} style={{ width: '400px' }}>
+              <Row>
+                <Carousel variant='dark' style={{ width: '400px' }}>
+                  {productDetail.map((p) => (
+                    <Carousel.Item key={p.id} interval={1000}>
+                      <img
+                        className='img-fluid'
+                        src={p.imageUrl}
+                        alt='imageUrl'
+                      />
+                    </Carousel.Item>
+                  ))}
+                </Carousel>
+              </Row>
+              <Row>
+                <h3>Description</h3>
+                <hr />
+                <p>
+                  {productDetail.length > 0
+                    ? productDetail[0].productDescription
+                    : ''}
+                </p>
+              </Row>
             </Col>
-            <Col md={7}>
-              <div className={style['productscreen__right']}>
-                <div className={style['right__info']}>
-                  <p>
-                    <span>{product.name}</span>
-                  </p>
-                  <p>
-                    Price:
-                    <span>Something casual</span>
-                  </p>
-                  <p>
-                    Manufacturer:
-                    <span>{product.manufacturer.name}</span>
-                  </p>
-
-                  <p>
-                    <button type='button' onClick={() => {}}>
-                      Add To Cart
-                    </button>
-                  </p>
-                </div>
-              </div>
+            <Col sm={3} style={{ marginRight: '0px', marginLeft: '100px' }}>
+              <p className='h2' style={{ fontWeight: 'bold' }}>
+                {productDetail.length > 0 ? productDetail[0].productName : ''}
+              </p>
+              <Row>
+                <p className='h3'>
+                  {productDetail.length > 0
+                    ? productDetail[0].productManufacturer
+                    : ''}
+                </p>
+              </Row>
+              <Row>
+                <select
+                  defaultValue={selectValue}
+                  onChange={handleSelectChange}
+                  className='form-select'>
+                  {productDetail.map((p) => (
+                    <option key={p.id} value={p.price}>
+                      {p.size}
+                    </option>
+                  ))}
+                </select>
+              </Row>
+              <Row>
+                <p
+                  className='h5'
+                  style={{ textAlign: 'end', marginTop: '20px' }}>
+                  $ {price}
+                </p>
+              </Row>
+              <Row>
+                <button
+                  style={{
+                    color: 'white',
+                    background: 'red',
+                    borderColor: 'red',
+                    fontSize: '20px',
+                  }}>
+                  Add to cart
+                </button>
+              </Row>
             </Col>
           </Row>
         </Container>
-        // <div className={style['productscreen']}>
-        //   <div className={style['productscreen__left']}>
-        //     <div className={style['left__image']}>
-        //       <img src={product.imageurl} alt='productname' />
-        //     </div>
-        //     <div className={style['left__info']}>
-        //       <p className={style['left__name']}>{product.name} </p>
-        //       <p>price: ${product.price}</p>
-        //     </div>
-        //   </div>
-        //   <div className={style['productscreen__right']}>
-        //     <div className={style['right__info']}>
-        //       <p>
-        //         Price
-        //         <span>$0.22</span>
-        //       </p>
-        //       <p>
-        //         <button type='button' onClick={() => {}}>
-        //           Add To Cart
-        //         </button>
-        //       </p>
-        //     </div>
-        //   </div>
-        // </div>
       )}
     </>
   );

@@ -6,15 +6,24 @@ import {
   NavDropdown,
   Navbar,
 } from 'react-bootstrap';
+import React, { useEffect } from 'react';
 
 import Button from '@restart/ui/esm/Button';
 import { LogoutAuthAction } from '../../redux/actions/AuthAction';
-import React from 'react';
 import { Routes } from '../../constants/routes';
 import { connect } from 'react-redux';
+import { getCategoriesUser } from '../../redux/actions/CategoryAction';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const Header = ({ auth, logout }) => {
+  const dispatch = useDispatch();
+  const getCategories = useSelector((state) => state.categoriesUser);
+  const { categories } = getCategories;
+  useEffect(() => {
+    dispatch(getCategoriesUser());
+  }, [dispatch]);
   // console.log(auth);
   const { user } = auth;
   const history = useHistory();
@@ -28,19 +37,20 @@ const Header = ({ auth, logout }) => {
             className='me-auto my-5 my-lg-0'
             style={{ maxHeight: '100px' }}
             navbarScroll>
-            <NavDropdown title='Feature' id='navbarScrollingDropdown'>
-              <NavDropdown.Item href='#action3'>Action</NavDropdown.Item>
-              <NavDropdown.Item href='#action4'>
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href='#action5'>
-                Something else here
-              </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href='#' disabled>
-              Link
-            </Nav.Link>
+            {categories.map((category) => (
+              <NavDropdown
+                key={category.id}
+                title={category.name}
+                id='navbarScrollingDropdown'>
+                {category.categories.map((c) => (
+                  <NavDropdown.Item
+                    key={c.id}
+                    href={`/homepage/category/${c.id}`}>
+                    {c.name}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
+            ))}
           </Nav>
           {auth.roles.includes('ROLE_USER') ? (
             <Form className='d-flex me-5'>
@@ -83,14 +93,7 @@ const Header = ({ auth, logout }) => {
               }}>
               Logout
             </Button>
-            {/* <Link
-              to='/signin'
-              onClick={(event) => {
-                event.preventDefault();
-                logout(history);
-              }}>
-              Logout
-            </Link> */}
+
             <h5 style={{ color: 'white' }}>{user.first_name}</h5>
           </>
         )}

@@ -6,22 +6,15 @@ import {
 
 import axios from 'axios';
 
-const getProducts = (currentPage) => async (dispatch) => {
+const getProducts = (page) => async (dispatch) => {
   try {
     dispatch({ type: ProductsActionType.GET_PRODUCT_REQUEST });
 
-    const response = await axios.get(`/products?offset=${currentPage}`);
-    const { data } = response.data;
-    const payload = {
-      products: data.content,
-      totalPage: data.totalPages,
-      activePage: data.pageable.pageNumber,
-    };
-    // console.log(response);
-    // console.log(payload);
+    const response = await axios.get(`/products?page=${page}`);
+    const { object } = response.data;
     dispatch({
       type: ProductsActionType.GET_PRODUCT_SUCCESS,
-      payload,
+      payload: object,
     });
   } catch (error) {
     dispatch({
@@ -35,15 +28,16 @@ const getProducts = (currentPage) => async (dispatch) => {
 };
 
 const getProductDetail = (id) => async (dispatch) => {
+  console.log(id);
   try {
     dispatch({ type: ProductDetailActionType.GET_PRODUCT_DETAIL_REQUEST });
 
-    const response = await axios.get(`/products/${id}`);
-    const { data } = response.data;
+    const response = await axios.get(`/productDetails?productId=${id}`);
+    const { object } = response.data;
     console.log(response);
     dispatch({
       type: ProductDetailActionType.GET_PRODUCT_DETAIL_SUCCESS,
-      payload: data,
+      payload: object,
     });
   } catch (error) {
     dispatch({
@@ -160,6 +154,21 @@ const deleteProductDetail = (id) => async (dispatch) => {
   }
 };
 
+const getProductByCategory = (id, page) => async (dispatch) => {
+  console.log('id ', id);
+  console.log('page ', page);
+  try {
+    dispatch({ type: ProductsActionType.GET_PRODUCT_CATEGORY_REQUEST });
+    const response = await axios.get(`/products/category/${id}?page=${page}`);
+    const { object } = response.data;
+    dispatch({
+      type: ProductsActionType.GET_PRODUCT_CATEGORY_SUCCESS,
+      payload: object,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export {
   getProducts,
   getProductDetail,
@@ -171,4 +180,5 @@ export {
   addNewProductDetail,
   updateProductDetail,
   deleteProductDetail,
+  getProductByCategory,
 };

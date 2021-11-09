@@ -3,21 +3,21 @@ import React, { useEffect, useState } from 'react';
 
 import Paging from '../component/Paging';
 import ProductCard from '../component/ProductCard';
-import { getProducts as listProducts } from '../../redux/actions/ProductsAction';
+import { getProductByCategory } from '../../redux/actions/ProductsAction';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 
-const Home = () => {
+const HomeCategory = () => {
   const dispatch = useDispatch();
   const getProducts = useSelector((state) => state.products);
   const { productLoading, products, error, currentPage, totalPages } =
     getProducts;
   const [page, setPage] = useState(0);
-
+  const { id } = useParams();
   useEffect(() => {
-    // console.log(data);
-    dispatch(listProducts(page));
-  }, [dispatch, page]);
+    dispatch(getProductByCategory(id, page));
+  }, [dispatch, id]);
 
   const pagination = (page) => {
     setPage(page);
@@ -33,7 +33,7 @@ const Home = () => {
                   <h2>Loading...</h2>
                 ) : error ? (
                   <h2>Error</h2>
-                ) : (
+                ) : products.length > 0 ? (
                   products
                     .filter((product) => product.productDetail.length > 0)
                     .map((product) => (
@@ -54,6 +54,8 @@ const Home = () => {
                         />
                       </Col>
                     ))
+                ) : (
+                  <h1>Nothing here yet</h1>
                 )}
               </Row>
               <Row>
@@ -73,4 +75,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeCategory;

@@ -7,6 +7,7 @@ import AdminRoute from './routes/AdminRoute';
 import Footer from './components/layout/Footer';
 import Header from './components/layout/Header';
 import Home from './components/page/Home';
+import HomeCategory from './components/page/HomeCategory';
 import PrivateRoute from './routes/PrivateRoute';
 import ProductDetail from './components/page/ProductDetail';
 import PublicRoute from './routes/PublicRoute';
@@ -24,6 +25,11 @@ export const privateRoutes = [
     path: `/productDetail/:id`,
     name: 'productDetail',
     component: ProductDetail,
+  },
+  {
+    path: `/homepage/category/:id`,
+    name: 'homeCategory',
+    component: HomeCategory,
   },
 ];
 export const publicRoute = [

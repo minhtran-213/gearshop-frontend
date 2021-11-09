@@ -5,7 +5,6 @@ import { useHistory } from 'react-router';
 
 const ProductCard = ({ imgUrl, name, price, id }) => {
   const history = useHistory();
-  // console.log(imgUrl);
   return (
     <Card style={{ width: '18rem' }} className='mb-3'>
       <Card.Img variant='top' src={imgUrl} style={{ height: '15rem' }} />

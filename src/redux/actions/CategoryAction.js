@@ -1,4 +1,5 @@
-import { CategoryAdminType } from './ActionTypes';
+import { CategoryAdminType, CategoryType } from './ActionTypes';
+
 import axios from 'axios';
 
 const getCategories = (page) => async (dispatch) => {
@@ -49,4 +50,21 @@ const deleteCategory = (id) => async (dispatch) => {
     console.log(error);
   }
 };
-export { getCategories, updateCategory, addNewCategory, deleteCategory };
+
+const getCategoriesUser = () => async (dispatch) => {
+  try {
+    dispatch({ type: CategoryType.GET_CATEGORY_USER_REQUEST });
+    const response = await axios.get('/categories');
+    const { object } = response.data;
+    dispatch({ type: CategoryType.GET_CATEGORY_USER_SUCCESS, payload: object });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export {
+  getCategories,
+  updateCategory,
+  addNewCategory,
+  deleteCategory,
+  getCategoriesUser,
+};
