@@ -3,6 +3,7 @@ import authReducer from './AuthReducer';
 import categoryReducer from './CategoryReducer';
 import { combineReducers } from 'redux';
 import manufacturerReducer from './ManufacturerReducer';
+import productAdminReducer from './ProductAdminReducer';
 import productDetailReducer from './ProductDetailReducer';
 import productReducer from './ProductReducer';
 import userReducer from './UserReducer';
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   manufacturer: manufacturerReducer,
   addressAdmin: addressReducer,
   categoryAdmin: categoryReducer,
+  productAdmin: productAdminReducer,
 });
 
 export default reducers;

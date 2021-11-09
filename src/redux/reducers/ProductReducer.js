@@ -1,4 +1,7 @@
-import { ProductsActionType } from '../actions/ActionTypes';
+import {
+  ProductsActionType,
+  ProductsAdminActionType,
+} from '../actions/ActionTypes';
 
 const initialState = {
   loading: false,
@@ -26,6 +29,7 @@ const productReducer = (state = initialState, action) => {
         ...state,
         ...{ error: action.payload },
       };
+
     default:
       return state;
   }

@@ -18,7 +18,6 @@ const updateCategory = (category) => async (dispatch) => {
       `/admin/category/${category.id}`,
       category
     );
-    console.log(response);
     dispatch({
       type: CategoryAdminType.UPDATE_CATEGORY,
       payload: response.data.successCode,

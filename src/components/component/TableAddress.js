@@ -3,7 +3,7 @@ import { Col, Container, Row, Table } from 'react-bootstrap';
 import { IoIosArrowRoundBack } from 'react-icons/io';
 import React from 'react';
 
-const TableAddress = ({ loading, addresses, userAddress }) => {
+const TableAddress = ({ loading, addresses, userAddress, isProductDetail }) => {
   return (
     <>
       {loading ? (
@@ -12,6 +12,7 @@ const TableAddress = ({ loading, addresses, userAddress }) => {
         <Container>
           <p>
             <IoIosArrowRoundBack
+              style={{ cursor: 'pointer' }}
               size='2rem'
               onClick={() => {
                 userAddress(true);

@@ -1,42 +1,98 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import { Col, Container, Row, Table } from 'react-bootstrap';
+import React, { useState } from 'react';
+
+import Paging from './Paging';
+import TableProductDetail from './TableProductDetail';
 import moment from 'moment';
 
-const TableProduct = ({ users }) => {
+const TableProduct = ({
+  products,
+  loading,
+  changePage,
+  currentPage,
+  totalPage,
+}) => {
+  const [productId, setProductId] = useState(0);
+  const [productToggler, setProductToggler] = useState(true);
   return (
     <>
-      <Table responsive='sm' variant='dark'>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Birthday</th>
-            <th>Gender</th>
-            <th>Date Created</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <th>{user.id}</th>
-              <th>{user.email}</th>
-              <th>{user.phoneNumber ? user.phoneNumber : 'empty'}</th>
-              <th>{user.firstName}</th>
-              <th>{user.lastName}</th>
-              <th>
-                {user.birthday
-                  ? moment(user.birthday).format('MMMM Do YYYY')
-                  : 'empty'}
-              </th>
-              <th>{user.gender ? user.gender : 'empty'}</th>
-              <th>{moment(user.dateCreated).format('MMMM Do YYYY')}</th>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      {productToggler ? (
+        <Container fluid>
+          <Row>
+            <Col sm={11}>
+              <Table responsive='sm' variant='dark'>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Manufacturer</th>
+                    <th>Category</th>
+                    <th>Created date</th>
+                    <th>Update date</th>
+                    <th>View Detail</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((product) => (
+                    <tr>
+                      <th>{product.id}</th>
+                      <th>{product.name}</th>
+                      <th>{product.description}</th>
+                      <th>{product.manufacturerName}</th>
+                      <th>{product.categoryName}</th>
+                      <th>
+                        {product.createdDate
+                          ? moment(product.createdDate).format('MMMM Do YYYY')
+                          : 'Not yet'}
+                      </th>
+                      <th>
+                        {product.createdDate
+                          ? moment(product.updateDate).format('MMMM Do YYYY')
+                          : 'Not yet'}
+                      </th>
+                      <th
+                        onClick={() => {
+                          setProductId(product.id);
+                          setProductToggler(false);
+                        }}
+                        style={{
+                          textDecoration: 'underline',
+                          cursor: 'pointer',
+                        }}>
+                        View Detail
+                      </th>
+                      <th>
+                        <button className='btn btn-primary'>Update</button>
+                      </th>
+                      <th>
+                        <button className='btn btn-danger'>Delete</button>
+                      </th>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <Paging
+                currentPage={currentPage}
+                pagination={changePage}
+                totalPage={totalPage}
+              />
+            </Col>
+            <Col sm={1}>
+              <div className='d-flex justify-content-center'>
+                <button className='btn btn-success'>Add new</button>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      ) : (
+        <TableProductDetail
+          productId={productId}
+          productToggler={() => setProductToggler(true)}
+        />
+      )}
     </>
   );
 };
