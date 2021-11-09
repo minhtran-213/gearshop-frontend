@@ -43,7 +43,7 @@ const TableProductDetail = ({ productId, productToggler }) => {
                 </thead>
                 <tbody>
                   {productDetails.map((productDetail) => (
-                    <tr>
+                    <tr key={productDetail.id}>
                       <th>{productDetail.id}</th>
                       <th>{productDetail.color}</th>
                       <th>{productDetail.price}</th>

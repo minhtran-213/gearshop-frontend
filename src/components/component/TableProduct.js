@@ -2,6 +2,7 @@ import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useState } from 'react';
 
 import Paging from './Paging';
+import ProductAdd from './ProductAdd';
 import TableProductDetail from './TableProductDetail';
 import moment from 'moment';
 
@@ -14,10 +15,15 @@ const TableProduct = ({
 }) => {
   const [productId, setProductId] = useState(0);
   const [productToggler, setProductToggler] = useState(true);
+  const [showAddProduct, setShowAddProduct] = useState(false);
   return (
     <>
       {productToggler ? (
         <Container fluid>
+          <ProductAdd
+            show={showAddProduct}
+            onHide={() => setShowAddProduct(false)}
+          />
           <Row>
             <Col sm={11}>
               <Table responsive='sm' variant='dark'>
@@ -37,7 +43,7 @@ const TableProduct = ({
                 </thead>
                 <tbody>
                   {products.map((product) => (
-                    <tr>
+                    <tr key={product.id}>
                       <th>{product.id}</th>
                       <th>{product.name}</th>
                       <th>{product.description}</th>
@@ -82,7 +88,11 @@ const TableProduct = ({
             </Col>
             <Col sm={1}>
               <div className='d-flex justify-content-center'>
-                <button className='btn btn-success'>Add new</button>
+                <button
+                  onClick={() => setShowAddProduct(true)}
+                  className='btn btn-success'>
+                  Add new
+                </button>
               </div>
             </Col>
           </Row>
