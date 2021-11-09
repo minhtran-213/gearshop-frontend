@@ -1,6 +1,7 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useState } from 'react';
 
+import DeleteProductPopup from './DeleteProductPopup';
 import Paging from './Paging';
 import ProductAdd from './ProductAdd';
 import ProductUpdate from './ProductUpdate';
@@ -18,6 +19,7 @@ const TableProduct = ({
   const [productToggler, setProductToggler] = useState(true);
   const [showAddProduct, setShowAddProduct] = useState(false);
   const [showUpdateProduct, setShowUpdateProduct] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
   return (
     <>
       {productToggler ? (
@@ -29,6 +31,11 @@ const TableProduct = ({
           <ProductUpdate
             show={showUpdateProduct}
             onHide={() => setShowUpdateProduct(false)}
+            productId={productId}
+          />
+          <DeleteProductPopup
+            show={showDeletePopup}
+            onHide={() => setShowDeletePopup(false)}
             productId={productId}
           />
           <Row>
@@ -88,7 +95,14 @@ const TableProduct = ({
                         </button>
                       </th>
                       <th>
-                        <button className='btn btn-danger'>Delete</button>
+                        <button
+                          onClick={() => {
+                            setProductId(product.id);
+                            setShowDeletePopup(true);
+                          }}
+                          className='btn btn-danger'>
+                          Delete
+                        </button>
                       </th>
                     </tr>
                   ))}

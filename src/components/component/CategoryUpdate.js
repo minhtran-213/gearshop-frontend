@@ -70,7 +70,9 @@ const CategoryUpdate = ({ show, onHide, category }) => {
             value={cateRequest.parentCategoryId}
             onChange={handleSelectChange}>
             {categories.map((category) => (
-              <option value={category.id}>{category.name}</option>
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
             ))}
             <option defaultValue value={0}>
               Nothing

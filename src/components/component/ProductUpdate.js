@@ -23,7 +23,6 @@ const ProductUpdate = ({ show, onHide, productId }) => {
     const manuRes = await axios.get('/manufacturers');
     const catRes = await axios.get('/admin/basicCategories');
     const prodRes = await axios.get(`/admin/product/${productId}`);
-    console.log('productId', productId);
 
     const { object } = prodRes.data;
     setManufacturer(manuRes.data.object);
