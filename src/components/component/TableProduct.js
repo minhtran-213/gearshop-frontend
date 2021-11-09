@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 import Paging from './Paging';
 import ProductAdd from './ProductAdd';
+import ProductUpdate from './ProductUpdate';
 import TableProductDetail from './TableProductDetail';
 import moment from 'moment';
 
@@ -16,6 +17,7 @@ const TableProduct = ({
   const [productId, setProductId] = useState(0);
   const [productToggler, setProductToggler] = useState(true);
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [showUpdateProduct, setShowUpdateProduct] = useState(false);
   return (
     <>
       {productToggler ? (
@@ -23,6 +25,11 @@ const TableProduct = ({
           <ProductAdd
             show={showAddProduct}
             onHide={() => setShowAddProduct(false)}
+          />
+          <ProductUpdate
+            show={showUpdateProduct}
+            onHide={() => setShowUpdateProduct(false)}
+            productId={productId}
           />
           <Row>
             <Col sm={11}>
@@ -71,7 +78,14 @@ const TableProduct = ({
                         View Detail
                       </th>
                       <th>
-                        <button className='btn btn-primary'>Update</button>
+                        <button
+                          onClick={() => {
+                            setProductId(product.id);
+                            setShowUpdateProduct(true);
+                          }}
+                          className='btn btn-primary'>
+                          Update
+                        </button>
                       </th>
                       <th>
                         <button className='btn btn-danger'>Delete</button>

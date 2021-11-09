@@ -85,6 +85,7 @@ const getProductDetailAdmin = (id) => async (dispatch) => {
 };
 
 const updateProduct = (product) => async (dispatch) => {
+  console.log(product);
   try {
     const response = await axios.put(`/admin/product/${product.id}`, product);
     console.log(response);

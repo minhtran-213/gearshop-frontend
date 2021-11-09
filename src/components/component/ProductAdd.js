@@ -109,7 +109,11 @@ const ProductAdd = ({ show, onHide }) => {
           <button onClick={onHide} className='btn btn-secondary'>
             Close
           </button>
-          <button className='btn btn-primary' form='addProduct' type='submit'>
+          <button
+            onClick={() => window.location.reload()}
+            className='btn btn-primary'
+            form='addProduct'
+            type='submit'>
             Save
           </button>
         </Modal.Footer>
