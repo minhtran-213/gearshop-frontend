@@ -82,6 +82,7 @@ const CategoryUpdate = ({ show, onHide, category }) => {
             Close
           </button>
           <button
+            onClick={() => window.location.reload()}
             type='submit'
             form='updateCategory'
             className='btn btn-primary'>

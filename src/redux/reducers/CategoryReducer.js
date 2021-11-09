@@ -30,6 +30,8 @@ const categoryReducer = (state = initState, action) => {
       return { ...state, ...{ message: action.payload } };
     case CategoryAdminType.ADD_CATEGORY:
       return { ...state, ...{ message: action.payload } };
+    case CategoryAdminType.DELETE_CATEGORY:
+      return { ...state, ...{ message: action.payload } };
     default:
       return state;
   }

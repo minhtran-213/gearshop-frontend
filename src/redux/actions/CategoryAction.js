@@ -38,4 +38,16 @@ const addNewCategory = (category) => async (dispatch) => {
     console.log(error);
   }
 };
-export { getCategories, updateCategory, addNewCategory };
+
+const deleteCategory = (id) => async (dispatch) => {
+  try {
+    const response = await axios.delete(`/admin/category/${id}`);
+    dispatch({
+      type: CategoryAdminType.DELETE_CATEGORY,
+      payload: response.data.successCode,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+export { getCategories, updateCategory, addNewCategory, deleteCategory };

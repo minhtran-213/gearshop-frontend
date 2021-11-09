@@ -1,31 +1,31 @@
 import { Modal } from 'react-bootstrap';
 import React from 'react';
-import { deleteManufacturer } from '../../redux/actions/ManufacturerAction';
+import { deleteCategory } from '../../redux/actions/CategoryAction';
 import { useDispatch } from 'react-redux';
 
-const DeleteManufacturerPopUp = ({ show, id, hide }) => {
+const DeleteCatePopup = ({ show, onHide, categoryId }) => {
   const dispatch = useDispatch();
   const confirmDelete = () => {
-    dispatch(deleteManufacturer(id));
+    dispatch(deleteCategory(categoryId));
   };
   return (
-    <form id='deleteManuConfirm' onSubmit={confirmDelete}>
-      <Modal show={show} onHide={hide}>
+    <form id='deleteCateConfirm' onSubmit={confirmDelete}>
+      <Modal show={show} onHide={onHide}>
         <Modal.Header>
           <Modal.Title>Delete Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input type='hidden' value={id} />
+          <input type='hidden' value={categoryId} />
           Are you sure you want to delete?
         </Modal.Body>
         <Modal.Footer>
-          <button type='button' className='btn btn-secondary' onClick={hide}>
+          <button type='button' className='btn btn-secondary' onClick={onHide}>
             Close
           </button>
           <button
             type='submit'
             className='btn btn-danger'
-            form='deleteManuConfirm'
+            form='deleteCateConfirm'
             onClick={() => window.location.reload()}>
             Delete
           </button>
@@ -35,4 +35,4 @@ const DeleteManufacturerPopUp = ({ show, id, hide }) => {
   );
 };
 
-export default DeleteManufacturerPopUp;
+export default DeleteCatePopup;

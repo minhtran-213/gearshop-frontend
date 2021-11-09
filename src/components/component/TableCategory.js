@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import CategoryAdd from './CategoryAdd';
 import CategoryDetail from './CategoryDetail';
 import CategoryUpdate from './CategoryUpdate';
+import DeleteCatePopup from './DeleteCatePopup';
 import Paging from './Paging';
 
 const TableCategory = ({
@@ -17,6 +18,7 @@ const TableCategory = ({
   const [showCategoryDetail, setShowCategoryDetail] = useState(false);
   const [showUpdateCategory, setShowUpdateCategory] = useState(false);
   const [showAddCategory, setShowCategoryAdd] = useState(false);
+  const [showDeleteCategory, setShowDeleteCategory] = useState(false);
   return (
     <>
       {loading ? (
@@ -38,6 +40,11 @@ const TableCategory = ({
           <CategoryAdd
             show={showAddCategory}
             onHide={() => setShowCategoryAdd(false)}
+          />
+          <DeleteCatePopup
+            show={showDeleteCategory}
+            onHide={() => setShowDeleteCategory(false)}
+            categoryId={categoryId}
           />
           <Row>
             <Col sm={10}>
@@ -71,6 +78,7 @@ const TableCategory = ({
                       </th>
                       <th>
                         <button
+                          className='btn btn-primary'
                           onClick={() => {
                             setShowUpdateCategory(true);
                             setCategoryId(category.id);
@@ -79,7 +87,14 @@ const TableCategory = ({
                         </button>
                       </th>
                       <th>
-                        <button>Delete</button>
+                        <button
+                          onClick={() => {
+                            setShowDeleteCategory(true);
+                            setCategoryId(category.id);
+                          }}
+                          className='btn btn-danger'>
+                          Delete
+                        </button>
                       </th>
                     </tr>
                   ))}

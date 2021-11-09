@@ -1,7 +1,7 @@
 import { Col, Container, Row, Table } from 'react-bootstrap';
 import React, { useState } from 'react';
 
-import DeletePopUp from './DeletePopUp';
+import DeleteManufacturerPopUp from './DeletePopUp';
 import ManuFacturerAddModal from './ManuFacturerAddModal';
 import ManuFacturerUpdateModal from './ManufacturerUpdateModal';
 import Paging from './Paging';
@@ -48,7 +48,7 @@ const TableManufacturer = ({
             title='Update manufacturer'
             manufacturer={currentManufacturer}
           />
-          <DeletePopUp
+          <DeleteManufacturerPopUp
             show={showDeletePopup}
             hide={hideDeletePopup}
             id={currentId}

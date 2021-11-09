@@ -55,7 +55,9 @@ const CategoryAdd = ({ show, onHide }) => {
             value={cateRequest.parentCategoryId}
             onChange={handleSelectChange}>
             {categories.map((category) => (
-              <option value={category.id}>{category.name}</option>
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
             ))}
             <option defaultValue value=''>
               Nothing
@@ -66,7 +68,11 @@ const CategoryAdd = ({ show, onHide }) => {
           <button onClick={onHide} className='btn btn-secondary'>
             Close
           </button>
-          <button type='submit' form='addCategory' className='btn btn-primary'>
+          <button
+            onClick={() => window.location.reload()}
+            type='submit'
+            form='addCategory'
+            className='btn btn-primary'>
             Save
           </button>
         </Modal.Footer>

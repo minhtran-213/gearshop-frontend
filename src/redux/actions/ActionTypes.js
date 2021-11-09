@@ -24,6 +24,7 @@ export const CategoryAdminType = {
   GET_CATEGORY_FAIL: 'GET_CATEGORY_FAIL',
   UPDATE_CATEGORY: 'UPDATE_CATEGORY',
   ADD_CATEGORY: 'ADD_CATEGORY',
+  DELETE_CATEGORY: 'DELETE_CATEGORY',
 };
 
 export const UserAdminType = {
